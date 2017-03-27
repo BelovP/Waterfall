@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__package__)
 
 
-class SpaView(LoginRequiredMixin, TemplateView):
+class SpaView(TemplateView):#LoginRequiredMixin, TemplateView):
     """
     Load single-page-app waterfall.js from static files
 

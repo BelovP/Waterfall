@@ -2,14 +2,14 @@ import logging
 from rest_framework.viewsets import ModelViewSet
 from annotations import models
 from annotations import serializers
-
+from django.http import HttpResponse
 
 logger = logging.getLogger(__package__)
 
 
 class RecordViewSet(ModelViewSet):
     queryset = models.Record.objects.all()
-    serializer_class = serializers.RecordSerializer
+    serializer_class = serializers.RecordSerializer 
 
 
 class AnnotationViewSet(ModelViewSet):
@@ -17,7 +17,12 @@ class AnnotationViewSet(ModelViewSet):
     serializer_class = serializers.AnnotationSerializer
 
 
-
-
-
-
+    def delete(self, request):
+    	x1 = request.data['x1']
+    	x2 = request.data['x2']
+    	t1 = request.data['t1']
+    	t2 = request.data['t2']
+    	label = request.data['label']
+    	record = request.data['record']
+    	models.Annotation.objects.get(x1=x1, x2=x2, t1=t1, t2=t2, label=label, record=record).delete()
+    	return HttpResponse()

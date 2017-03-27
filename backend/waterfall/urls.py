@@ -12,7 +12,6 @@ api_router = routers.DefaultRouter()
 api_router.register(r'records', annotations_api.RecordViewSet)
 api_router.register(r'annotations', annotations_api.AnnotationViewSet)
 
-
 urlpatterns = [
     url(r'^$', annotations_views.SpaView.as_view()),
     url(r'^api/v1/', include(api_router.urls)),
