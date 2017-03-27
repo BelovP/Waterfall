@@ -30,7 +30,6 @@ class App extends Component {
           for (var i = 0; i < data.results.length; ++i) {
             var result = data.results[i];
             console.log('annotation added');
-            debugger;
             var myAnnotation = {
                 src: "http://localhost:8080/my-dummy-image-path",
                 text : result.label,
