@@ -31,7 +31,7 @@ class App extends Component {
             var result = data.results[i];
             console.log('annotation added');
             var myAnnotation = {
-                src: "http://localhost:8080/my-dummy-image-path",
+                src: "http://my-dummy-image-path",
                 text : result.label,
                 shapes : [{
                     type : 'rect',
@@ -53,6 +53,43 @@ class App extends Component {
 
   render() {
     jQuery.noConflict();
+    anno.addHandler('onAnnotationUpdated', function(annotation) {
+      console.log('annotation updated');
+      var x1_val = annotation.shapes[0].geometry.x;
+      var x2_val = annotation.shapes[0].geometry.x + annotation.shapes[0].geometry.width;
+      var t1_val = annotation.shapes[0].geometry.y;
+      var t2_val = annotation.shapes[0].geometry.y + annotation.shapes[0].geometry.height;
+      var record_id = 2;
+      $.ajax({
+        type: "DELETE",
+        url: 'http://localhost:8000/api/v1/annotations/',
+        data: {t1: t1_val, t2: t2_val, x1: x1_val, x2: x2_val, record: record_id},
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          console.log('successful delete');
+          //this.setState({data: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error('error', status, err.toString());
+        }.bind(this)
+      });
+      $.ajax({
+        type: "POST",
+        url: 'http://localhost:8000/api/v1/annotations/',
+        data: {t1: t1_val, t2: t2_val, x1: x1_val, x2: x2_val, label: annotation.text, record: record_id},
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          console.log('successful request');
+          //this.setState({data: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error('error', status, err.toString());
+        }.bind(this)
+      });
+    });
+
     anno.addHandler('onAnnotationCreated', function(annotation) {
       console.log('new annotation');
       var x1_val = annotation.shapes[0].geometry.x;
@@ -100,7 +137,7 @@ class App extends Component {
     });
     return (
       <div>
-        <img src="images/waterfall.png" className="annotatable" data-original="http://localhost:8080/my-dummy-image-path"/>
+        <img src="images/waterfall.png" className="annotatable" data-original="http://my-dummy-image-path"/>
       </div>
     )
     return (
