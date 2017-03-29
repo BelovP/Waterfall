@@ -1,4 +1,5 @@
 import logging
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.viewsets import ModelViewSet
 from annotations import models
 from annotations import serializers
@@ -6,15 +7,23 @@ from django.http import JsonResponse
 
 logger = logging.getLogger(__package__)
 
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
+
 
 class RecordViewSet(ModelViewSet):
     queryset = models.Record.objects.all()
-    serializer_class = serializers.RecordSerializer 
+    serializer_class = serializers.RecordSerializer
+
+    authentication_classes = [CsrfExemptSessionAuthentication]
 
 
 class AnnotationViewSet(ModelViewSet):
     queryset = models.Annotation.objects.all()
     serializer_class = serializers.AnnotationSerializer
+
+    authentication_classes = [CsrfExemptSessionAuthentication]
 
 
     def delete(self, request):

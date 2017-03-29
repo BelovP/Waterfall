@@ -22,7 +22,7 @@ class App extends Component {
       anno.reset();
       $.ajax({
         type: "GET",
-        url: 'http://localhost:8000/api/v1/annotations/',
+        url: '/api/v1/annotations/',
         data: {record: this.state.record_id},
         dataType: 'json',
         cache: false,
@@ -62,7 +62,7 @@ class App extends Component {
       var record_id = 2;
       $.ajax({
         type: "DELETE",
-        url: 'http://localhost:8000/api/v1/annotations/',
+        url: '/api/v1/annotations/',
         data: {t1: t1_val, t2: t2_val, x1: x1_val, x2: x2_val, record: record_id},
         dataType: 'json',
         cache: false,
@@ -76,7 +76,7 @@ class App extends Component {
       });
       $.ajax({
         type: "POST",
-        url: 'http://localhost:8000/api/v1/annotations/',
+        url: '/api/v1/annotations/',
         data: {t1: t1_val, t2: t2_val, x1: x1_val, x2: x2_val, label: annotation.text, record: record_id},
         dataType: 'json',
         cache: false,
@@ -99,7 +99,7 @@ class App extends Component {
       var record_id = 2;
       $.ajax({
         type: "POST",
-        url: 'http://localhost:8000/api/v1/annotations/',
+        url: '/api/v1/annotations/',
         data: {t1: t1_val, t2: t2_val, x1: x1_val, x2: x2_val, label: annotation.text, record: record_id},
         dataType: 'json',
         cache: false,
@@ -122,7 +122,7 @@ class App extends Component {
       var record_id = 2;
       $.ajax({
         type: "DELETE",
-        url: 'http://localhost:8000/api/v1/annotations/',
+        url: '/api/v1/annotations/',
         data: {t1: t1_val, t2: t2_val, x1: x1_val, x2: x2_val, label: annotation.text, record: record_id},
         dataType: 'json',
         cache: false,
